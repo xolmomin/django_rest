@@ -14,15 +14,17 @@ class SlugBaseModel(Model):
     name = CharField(max_length=255)
     slug = SlugField(unique=True, editable=False)
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        self.slug = slugify(self.name)
-        super().save(force_insert, force_update, using, update_fields)
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.name
 
-    class Meta:
-        abstract = True
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.slug = slugify(self.name)
+        while self.__class__.objects.filter(slug=self.slug).exists():
+            self.slug += '-1'
+        super().save(force_insert, force_update, using, update_fields)
 
 
 class Category(SlugBaseModel):
