@@ -43,4 +43,29 @@ postgres,redis,mysql,mongodb,rabbitmq,minio,elasticsearch,nginx,
 
 
 
+1) sertifikatni python code (course, fullname)
+2)
+    passport detect
+    name, passport series number
+3) instagram (like, comment)
 
+
+
+
+
+
+
+docker compose exec -it backend_service python3 manage.py migrate
+
+docker exec -it dc913 python3 manage.py migrate
+
+docker exec -it dc913 sh
+python3 manage.py migrate
+
+
+scale up
+
+
+
+python3 manage.py runserver (single thread)
+gunicorn root.wsgi:application --bind 0.0.0.0:8000 ()

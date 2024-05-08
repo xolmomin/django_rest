@@ -1,0 +1,23 @@
+services:
+  backend_service:
+    build:
+      context: .
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '8080:8000'
+    depends_on:
+      - postgres_service
+
+  postgres_service:
+    image: postgres:alpine
+    env_file: .env
+    restart: always
+    volumes:
+      - pg_data_p19:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
+volumes:
+  pg_data_p19: { }
