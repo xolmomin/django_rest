@@ -3,12 +3,27 @@ services:
     build:
       context: .
     restart: always
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /app
+          ignore:
+            - .venv
+            - .idea
+            - .git
+        - action: rebuild
+          path: requirements.txt
     env_file:
       - .env
     ports:
       - '8080:8000'
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
     depends_on:
       - postgres_service
+      - minio_service
 
   postgres_service:
     image: postgres:alpine
@@ -17,7 +32,23 @@ services:
     volumes:
       - pg_data_p19:/var/lib/postgresql/data
     ports:
-      - '5433:5432'
+      - '5432:5432'
+
+  minio_service:
+    image: minio/minio
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      MINIO_ROOT_USER: "admin"
+      MINIO_ROOT_PASSWORD: "io9YG0HS5A"
+    env_file: .env
+    command: server /data --console-address :9001
+    volumes:
+      - minio_volume:/data
 
 volumes:
   pg_data_p19: { }
+  minio_volume: { }
+  media_volume: { }
+  static_volume: { }

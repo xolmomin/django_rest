@@ -1,4 +1,5 @@
-from django.db.models import Model, CASCADE, CharField, SlugField, FloatField, TextField, DateTimeField, ForeignKey
+from django.db.models import Model, CASCADE, ImageField, CharField, SlugField, FloatField, TextField, DateTimeField, \
+    ForeignKey
 from django.utils.text import slugify
 
 
@@ -34,4 +35,5 @@ class Category(SlugBaseModel):
 class Product(CreatedBaseModel, SlugBaseModel):
     price = FloatField(default=0)
     description = TextField(null=True, blank=True)
+    image = ImageField(null=True, blank=True, upload_to='products')
     category = ForeignKey('apps.Category', CASCADE, related_name='products')

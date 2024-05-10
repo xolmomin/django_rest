@@ -69,3 +69,11 @@ scale up
 
 python3 manage.py runserver (single thread)
 gunicorn root.wsgi:application --bind 0.0.0.0:8000 ()
+
+
+
+docker compose
+django,celery(rabbitmq),postgres,redis(cache)
+
+
+compose watch
