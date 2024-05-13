@@ -77,3 +77,4 @@ django,celery(rabbitmq),postgres,redis(cache)
 
 
 compose watch
+

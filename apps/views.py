@@ -8,10 +8,11 @@ from rest_framework.viewsets import ModelViewSet
 from apps.filters import ProductFilter
 from apps.models import Category, Product
 from apps.serializers import CategoryModelSerializer, ProductListModelSerializer, ProductDetailModelSerializer
+from django.core.cache import cache
 
 
 class CategoryListCreateAPIView(ListAPIView):
-    queryset = Category.objects.all()
+    queryset = Category.objects.order_by('id')
     serializer_class = CategoryModelSerializer
 
 
@@ -25,6 +26,7 @@ class ProductModelViewSet(ModelViewSet):
     serializer_class = ProductListModelSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering_fields = ['price', 'created_at']
+
     # v1
     # filter_backends = [DjangoFilterBackend]
     # filterset_fields = 'category', 'slug'

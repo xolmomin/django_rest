@@ -2,7 +2,7 @@ services:
   backend_service:
     build:
       context: .
-    restart: always
+      dockerfile: ./compose/django/Dockerfile
     develop:
       watch:
         - action: sync
@@ -14,25 +14,42 @@ services:
             - .git
         - action: rebuild
           path: requirements.txt
+    command: /start-django
     env_file:
-      - .env
+      - path: .env
+        required: true
     ports:
-      - '8080:8000'
+      - ${PROJECT_PORT}:${PROJECT_PORT}
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
     depends_on:
       - postgres_service
       - minio_service
+      - redis_service
+      - rabbitmq_service
+
+  celery:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    command: /start-celeryworker
+
+  celery_beat:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    env_file: .env
+    command: /start-celerybeat
 
   postgres_service:
     image: postgres:alpine
-    env_file: .env
-    restart: always
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
     volumes:
       - pg_data_p19:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
 
   minio_service:
     image: minio/minio
@@ -40,15 +57,29 @@ services:
       - '9000:9000'
       - '9001:9001'
     environment:
-      MINIO_ROOT_USER: "admin"
-      MINIO_ROOT_PASSWORD: "io9YG0HS5A"
+      - MINIO_ROOT_USER="admin"
+      - MINIO_ROOT_PASSWORD="io9YG0HS5A"
     env_file: .env
     command: server /data --console-address :9001
     volumes:
       - minio_volume:/data
 
+  redis_service:
+    image: redis:alpine
+    ports:
+      - ${REDIS_PORT}:${REDIS_PORT}
+    volumes:
+      - redis_volume:/data
+
+  rabbitmq_service:
+    image: rabbitmq:3-management
+    ports:
+      - 15672:15672
+      - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
+
 volumes:
-  pg_data_p19: { }
-  minio_volume: { }
-  media_volume: { }
-  static_volume: { }
+  pg_data_p19:
+  minio_volume:
+  media_volume:
+  static_volume:
+  redis_volume:
