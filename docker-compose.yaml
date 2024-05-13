@@ -34,13 +34,36 @@ services:
       context: .
       dockerfile: ./compose/django/Dockerfile
     command: /start-celeryworker
+    depends_on:
+      - postgres_service
+      - minio_service
+      - redis_service
+      - rabbitmq_service
 
   celery_beat:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile
-    env_file: .env
     command: /start-celerybeat
+    depends_on:
+      - postgres_service
+      - minio_service
+      - redis_service
+      - rabbitmq_service
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    command: /start-flower
+    env_file: .env
+    ports:
+      - ${FLOWER_PORT}:${FLOWER_PORT}
+    depends_on:
+      - postgres_service
+      - minio_service
+      - redis_service
+      - rabbitmq_service
 
   postgres_service:
     image: postgres:alpine

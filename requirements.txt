@@ -5,6 +5,7 @@ asgiref==3.8.1
 billiard==4.2.0
 boto3==1.34.102
 botocore==1.34.102
+django-celery-results
 celery==5.4.0
 certifi==2024.2.2
 cffi==1.16.0
