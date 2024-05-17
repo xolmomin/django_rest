@@ -101,6 +101,22 @@ services:
       - 15672:15672
       - ${RABBITMQ_PORT}:${RABBITMQ_PORT}
 
+  nginx:
+    build:
+      context: .
+      dockerfile: ./compose/nginx/Dockerfile
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - web_service
+    logging:
+      options:
+        max-size: '10m'
+        max-file: '3'
+    volumes:
+      - static_volume:/app/static
+      - media_volume:/app/media
 volumes:
   pg_data_p19:
   minio_volume:
