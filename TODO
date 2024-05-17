@@ -102,6 +102,22 @@ Bo1234B67b
 sudo certbot --nginx -d example.com -d www.example.com
 
 
-https://www.olx.uz/ (certbot)
-http://www.olx.uz/
 
+
+https://docs.docker.com/engine/install/ubuntu/
+https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
+
+
+
+services:
+  app:
+    image: 'docker.io/jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    network_mode: "host"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
