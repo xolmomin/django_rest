@@ -109,7 +109,7 @@ services:
       - '80:80'
       - '443:443'
     depends_on:
-      - web_service
+      - backend_service
     logging:
       options:
         max-size: '10m'
@@ -117,6 +117,7 @@ services:
     volumes:
       - static_volume:/app/static
       - media_volume:/app/media
+
 volumes:
   pg_data_p19:
   minio_volume:
