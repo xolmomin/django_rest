@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN --mount=type=cache,id=custom-pip,target=/root/.cache/pip pip install -r requirements.txt && pip3 install gunicorn
+RUN --mount=type=cache,id=custom-pip,target=/root/.cache/pip pip install -r requirements.txt
 
 COPY /compose/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
