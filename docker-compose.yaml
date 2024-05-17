@@ -33,14 +33,27 @@ services:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile
-    command: /start-celeryworker
+    command: sh -c "celery -A root worker -l INFO"
+    depends_on:
+      - rabbitmq_service
 
   celery_beat:
     build:
       context: .
       dockerfile: ./compose/django/Dockerfile
-    env_file: .env
     command: /start-celerybeat
+    depends_on:
+      - rabbitmq_service
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    ports:
+      - ${FLOWER_PORT}:${FLOWER_PORT}
+    command: sh -c "celery -A root.celery.app flower --port=${FLOWER_PORT}"
+    depends_on:
+      - rabbitmq_service
 
   postgres_service:
     image: postgres:alpine

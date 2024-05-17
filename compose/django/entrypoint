@@ -35,4 +35,3 @@ done
 
 exec "$@"
 
-echo "end entrypoint"
