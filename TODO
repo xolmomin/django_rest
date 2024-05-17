@@ -95,3 +95,13 @@ docker compose + nginx +
 
 Bo1234B67b
 128.199.152.57
+
+
+
+
+sudo certbot --nginx -d example.com -d www.example.com
+
+
+https://www.olx.uz/ (certbot)
+http://www.olx.uz/
+
