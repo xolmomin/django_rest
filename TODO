@@ -78,3 +78,11 @@ django,celery(rabbitmq),postgres,redis(cache)
 
 compose watch
 
+
+
+TASK
+SEPARATE
+1. .env
+2. req.txt
+3. settings
+

@@ -3,4 +3,5 @@
 set -o errexit
 set -o nounset
 
+sleep 3 # waiting rabbitmq
 celery -A root worker -l INFO

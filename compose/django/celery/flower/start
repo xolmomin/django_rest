@@ -3,4 +3,6 @@
 set -o errexit
 set -o nounset
 
+sleep 3 # waiting rabbitmq
+
 celery -A root.celery.app flower --port=${FLOWER_PORT}
