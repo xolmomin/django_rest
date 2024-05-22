@@ -1,146 +1,25 @@
+PyYAML, uritemplate (5.1+, 3.0.0+) - Schema generation support.
+Markdown (3.0.0+) - Markdown support for the browsable API.
+Pygments (2.4.0+) - Add syntax highlighting to Markdown processing.
+django-filter (1.0.1+) - Filtering support.
+django-guardian (1.1.1+) - Object level permissions support.
 
 
-https://books.agiliq.com/projects/django-orm-cookbook/en/latest/index.html#
-https://books.agiliq.com/projects/django-admin-cookbook/en/latest/
 
+oxirigi ko'riladiganlar
+DjangoModelPermissionsOrAnonReadOnly
 
-https://books.agiliq.com/projects/django-api-polls-tutorial/en/latest/index.html
 
+task
 
+1. uuid barcha modellarga
+2. productda kop rasmlar bolishi kk
+3. product qoshishda category nomini yozganda avtomatik chiqarib berishi kk
+4. ckeditor qoshish (product description ga)
+5. product apisini chiqarish (category va image larini ham qaytarishi kk)
+6. category apisini chiqarish (product_count nomli field ham qaytishi kk,
+category ga tegishli productlar soni)
 
-
-https://www.django-rest-framework.org/community/third-party-packages/
-
-https://chayanikamisra.medium.com/generate-swagger-doc-for-your-django-project-using-drf-yasg-e9db25773cfa
-
-https://docs.djangoproject.com/en/5.0/ref/models/querysets/#filter
-
-postman collection, swagger
-
-
-
-https://github.com/xolmomin/django_rest
-
-
-https://www.olx.uz/oz/elektronika/telefony/mobilnye-telefony/?currency=UZS
-
-
-filter
-ordering(qimmat, arzon)
-
-
-$, sum
-
-
-list
-detail
-
-docker, pycharm, python
-
-postgres,redis,mysql,mongodb,rabbitmq,minio,elasticsearch,nginx,
-
-
-
-
-
-1) sertifikatni python code (course, fullname)
-2)
-    passport detect
-    name, passport series number
-3) instagram (like, comment)
-
-
-
-
-
-
-
-docker compose exec -it backend_service python3 manage.py migrate
-
-docker exec -it dc913 python3 manage.py migrate
-
-docker exec -it dc913 sh
-python3 manage.py migrate
-
-
-scale up
-
-
-
-python3 manage.py runserver (single thread)
-gunicorn root.wsgi:application --bind 0.0.0.0:8000 ()
-
-
-
-docker compose
-django,celery(rabbitmq),postgres,redis(cache)
-
-
-compose watch
-
-
-
-nginx
-server
-domain
-.env
-
-
-domain + ssl
-github link(public) + nginx + gunicorn
-
-
-docker compose + nginx +
-
-
-Bo1234B67b
-146.190.85.59
-
-
-
-
-sudo certbot --nginx -d example.com -d www.example.com
-
-
-
-
-https://docs.docker.com/engine/install/ubuntu/
-https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
-
-
-
-services:
-  app:
-    image: 'docker.io/jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-    network_mode: "host"
-    volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
-
-
-product - list
-
-
-
-category(image), product(images)
-
-
-
-
-TASK
-1. category larni chiqarish kk (kamida 1ta product borlarini)
-
-
-
-google,facebook,github,linkedin
-telegram ouath2
-two factor auth
-oauth2
 
 
 
