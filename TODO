@@ -121,3 +121,26 @@ services:
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
+
+
+product - list
+
+
+
+category(image), product(images)
+
+
+
+
+TASK
+1. category larni chiqarish kk (kamida 1ta product borlarini)
+
+
+
+google,facebook,github,linkedin
+telegram ouath2
+two factor auth
+oauth2
+
+
+

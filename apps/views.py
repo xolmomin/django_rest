@@ -3,6 +3,8 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.filters import OrderingFilter
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, UpdateAPIView
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.throttling import UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 
 from apps.filters import ProductFilter
@@ -14,6 +16,10 @@ from django.core.cache import cache
 class CategoryListCreateAPIView(ListAPIView):
     queryset = Category.objects.order_by('id')
     serializer_class = CategoryModelSerializer
+    # permission_classes = [AllowAny]
+
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class CategoryRetrieveUpdateDestroyAPIView(UpdateAPIView):
@@ -26,6 +32,7 @@ class ProductModelViewSet(ModelViewSet):
     serializer_class = ProductListModelSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering_fields = ['price', 'created_at']
+    permission_classes = AllowAny,
 
     # v1
     # filter_backends = [DjangoFilterBackend]

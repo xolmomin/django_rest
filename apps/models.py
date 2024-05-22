@@ -29,11 +29,15 @@ class SlugBaseModel(Model):
 
 
 class Category(SlugBaseModel):
-    pass
+    image = ImageField(null=True, blank=True, upload_to='categories/image/%Y/%m/%d/')
 
 
 class Product(CreatedBaseModel, SlugBaseModel):
     price = FloatField(default=0)
     description = TextField(null=True, blank=True)
-    image = ImageField(null=True, blank=True, upload_to='products')
     category = ForeignKey('apps.Category', CASCADE, related_name='products')
+
+
+class ProductImage(Model):
+    image = ImageField(upload_to='products/image/%Y/%m/%d/')
+    product = ForeignKey('apps.Product', CASCADE)
