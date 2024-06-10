@@ -5,9 +5,14 @@ from apps.models import Category, Product, ProductImage
 
 
 class CategoryModelSerializer(ModelSerializer):
+    # product_count = SerializerMethodField()
+
     class Meta:
         model = Category
-        fields = 'id', 'name', 'slug', 'image'
+        fields = 'id', 'name', 'slug', 'image' # , 'product_count'
+
+    # def get_product_count(self, obj: Category):
+    #     return obj.products.count()
 
 
 class ProductImageModelSerializer(ModelSerializer):
@@ -18,12 +23,11 @@ class ProductImageModelSerializer(ModelSerializer):
 
 class ProductListModelSerializer(ModelSerializer):
     category = CategoryModelSerializer()
-    v_count = SerializerMethodField(method_name='vowel_count')
     images = ProductImageModelSerializer(source='productimage_set', many=True, read_only=True)
 
     class Meta:
         model = Product
-        fields = 'id', 'name', 'price', 'description', 'category', 'images', 'v_count'
+        fields = 'id', 'name', 'price', 'description', 'category', 'images'
         # exclude = 'created_at', 'updated_at', 'description'
 
     def vowel_count(self, obj: Product):

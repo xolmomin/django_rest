@@ -12,12 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -29,15 +26,19 @@ INSTALLED_APPS = [
     'apps.apps.AppsConfig',
     'rest_framework',
     'django_filters',
+    'django_ckeditor_5',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
-    'drf_yasg',
+    # 'drf_yasg',
+    'drf_spectacular',
+    # 'debug_toolbar',
     "minio_storage",
     'django_celery_beat',
     'django_celery_results',
 ]
 
 MIDDLEWARE = [
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -126,7 +127,7 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
     'DEFAULT_PAGINATION_CLASS': 'apps.pagination.CustomPageNumberPagination',
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 15,
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.BasicAuthentication',  # username password
         'rest_framework.authentication.SessionAuthentication',
@@ -136,6 +137,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
     # 'DEFAULT_THROTTLE_CLASSES': [
     #     'rest_framework.throttling.AnonRateThrottle',
     #     'rest_framework.throttling.UserRateThrottle'
@@ -144,6 +146,22 @@ REST_FRAMEWORK = {
     #     'anon': '10/day',
     #     'user': '5/minutes'
     # }
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+    },
+    'AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Your Project API',
+    'DESCRIPTION': 'Your project description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+
 }
 
 LOGGING = {
@@ -163,7 +181,7 @@ LOGGING = {
     'loggers': {
         'django.db.backends': {
             'level': 'DEBUG',
-            # 'handlers': ['console'],
+            'handlers': ['console'],
         }
     }
 }
@@ -245,3 +263,119 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+customColorPalette = [
+    {
+        'color': 'hsl(4, 90%, 58%)',
+        'label': 'Red'
+    },
+    {
+        'color': 'hsl(340, 82%, 52%)',
+        'label': 'Pink'
+    },
+    {
+        'color': 'hsl(291, 64%, 42%)',
+        'label': 'Purple'
+    },
+    {
+        'color': 'hsl(262, 52%, 47%)',
+        'label': 'Deep Purple'
+    },
+    {
+        'color': 'hsl(231, 48%, 48%)',
+        'label': 'Indigo'
+    },
+    {
+        'color': 'hsl(207, 90%, 54%)',
+        'label': 'Blue'
+    },
+]
+
+# CKEDITOR_5_CUSTOM_CSS = 'path_to.css' # optional
+# CKEDITOR_5_FILE_STORAGE = "path_to_storage.CustomStorage" # optional
+CKEDITOR_5_CONFIGS = {
+    'botir': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+                    'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+
+    },
+    'default': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', 'heading3',
+            '|',
+            'bulletedList', 'numberedList',
+            '|',
+            'blockQuote',
+        ],
+        'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
+                    'code', 'subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
+                    'bulletedList', 'numberedList', 'todoList', '|', 'blockQuote', 'imageUpload', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
+                    'insertTable', ],
+        'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft',
+                        'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side', '|'],
+            'styles': [
+                'full',
+                'side',
+                'alignLeft',
+                'alignRight',
+                'alignCenter',
+            ]
+
+        },
+        'table': {
+            'contentToolbar': ['tableColumn', 'tableRow', 'mergeTableCells',
+                               'tableProperties', 'tableCellProperties'],
+            'tableProperties': {
+                'borderColors': customColorPalette,
+                'backgroundColors': customColorPalette
+            },
+            'tableCellProperties': {
+                'borderColors': customColorPalette,
+                'backgroundColors': customColorPalette
+            }
+        },
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'},
+                {'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3'}
+            ]
+        }
+    },
+    'list': {
+        'properties': {
+            'styles': 'true',
+            'startIndex': 'true',
+            'reversed': 'true',
+        }
+    }
+}
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "localhost"
+]
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+}
+
+DEBUG_TOOLBAR_PANELS = [
+    'debug_toolbar.panels.versions.VersionsPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
+    'debug_toolbar.panels.history.HistoryPanel',
+    'debug_toolbar.panels.settings.SettingsPanel',
+    'debug_toolbar.panels.headers.HeadersPanel',
+    'debug_toolbar.panels.request.RequestPanel',
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.templates.TemplatesPanel',
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    'debug_toolbar.panels.cache.CachePanel',
+    'debug_toolbar.panels.signals.SignalsPanel',
+    'debug_toolbar.panels.logging.LoggingPanel',
+    'debug_toolbar.panels.redirects.RedirectsPanel',
+    'debug_toolbar.panels.profiling.ProfilingPanel',
+]

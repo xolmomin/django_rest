@@ -1,6 +1,10 @@
-from django.db.models import Model, CASCADE, ImageField, CharField, SlugField, FloatField, TextField, DateTimeField, \
-    ForeignKey
+import uuid
+
+from django.contrib.postgres.functions import RandomUUID
+from django.db.models import Model, CASCADE, ImageField, CharField, SlugField, FloatField, DateTimeField, \
+    ForeignKey, UUIDField
 from django.utils.text import slugify
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class CreatedBaseModel(Model):
@@ -29,15 +33,18 @@ class SlugBaseModel(Model):
 
 
 class Category(SlugBaseModel):
+    id = UUIDField(primary_key=True, db_default=RandomUUID(), editable=False)
     image = ImageField(null=True, blank=True, upload_to='categories/image/%Y/%m/%d/')
 
 
 class Product(CreatedBaseModel, SlugBaseModel):
+    id = UUIDField(primary_key=True, db_default=RandomUUID(), editable=False)
     price = FloatField(default=0)
-    description = TextField(null=True, blank=True)
+    description = CKEditor5Field(null=True, blank=True)
     category = ForeignKey('apps.Category', CASCADE, related_name='products')
 
 
 class ProductImage(Model):
+    id = UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     image = ImageField(upload_to='products/image/%Y/%m/%d/')
     product = ForeignKey('apps.Product', CASCADE)

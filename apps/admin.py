@@ -11,9 +11,11 @@ class ProductImageStackedInline(admin.StackedInline):
 
 @admin.register(Product)
 class ProductModelAdmin(admin.ModelAdmin):
+    autocomplete_fields = ['category']
     inlines = [ProductImageStackedInline]
 
 
 @admin.register(Category)
 class CategoryModelAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ['name']
+

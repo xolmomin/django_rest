@@ -1,34 +1,32 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from drf_yasg.utils import swagger_auto_schema
+from drf_spectacular.utils import extend_schema_view, extend_schema
 from rest_framework.filters import OrderingFilter
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, ListAPIView, UpdateAPIView
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.throttling import UserRateThrottle
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView
+from rest_framework.permissions import AllowAny
 from rest_framework.viewsets import ModelViewSet
 
-from apps.filters import ProductFilter
 from apps.models import Category, Product
 from apps.serializers import CategoryModelSerializer, ProductListModelSerializer, ProductDetailModelSerializer
-from django.core.cache import cache
 
 
+@extend_schema_view(
+    list=extend_schema(
+        summary="List all the category.",
+        description="Return a list of all categories in the system.",
+    )
+)
 class CategoryListCreateAPIView(ListAPIView):
-    queryset = Category.objects.order_by('id')
+    queryset = Category.objects.prefetch_related('products').order_by('id')
     serializer_class = CategoryModelSerializer
-    # permission_classes = [AllowAny]
-
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
 
 
-class CategoryRetrieveUpdateDestroyAPIView(UpdateAPIView):
+class CategoryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryModelSerializer
 
 
 class ProductModelViewSet(ModelViewSet):
-    queryset = Product.objects.select_related('category')
+    queryset = Product.objects.select_related('category').prefetch_related('productimage_set')
     serializer_class = ProductListModelSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     ordering_fields = ['price', 'created_at']
@@ -66,3 +64,5 @@ class ProductModelViewSet(ModelViewSet):
 # class ProductRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
 #     queryset = Product.objects.all()
 #     serializer_class = ProductDetailModelSerializer
+# csrf_token
+# product - (GET) product-list

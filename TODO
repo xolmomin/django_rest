@@ -10,15 +10,118 @@ oxirigi ko'riladiganlar
 DjangoModelPermissionsOrAnonReadOnly
 
 
-task
 
-1. uuid barcha modellarga
-2. productda kop rasmlar bolishi kk
-3. product qoshishda category nomini yozganda avtomatik chiqarib berishi kk
-4. ckeditor qoshish (product description ga)
-5. product apisini chiqarish (category va image larini ham qaytarishi kk)
-6. category apisini chiqarish (product_count nomli field ham qaytishi kk,
-category ga tegishli productlar soni)
+botcommerce
+
+
+serializer
+class based apiview
+transaction
+model manager, queryset
+signal
+celery mark watermark in image
+
+
+
+WATCH THIS
+1. rasm ozini db ga saqlash
+2. json da rasm yuborish
+
+
+elastichsearch
+graphql
+websocket
+
+
+microservice
+
+
+cicd.yaml
+
+local (git push) -> (github) -> (sh, bash, docker, docker-compose)
+
+gitlab, bitbucket
+
+
+
+
+
+sql logger
+debug tool
+
+https://pypi.org/project/django-query-counter/
+https://github.com/jazzband/django-silk
+
+
+
+group-1(Toxirbek)
+Abbosxon Amriyev
+Amir Abdulloh Azimov
+Asqarbek Yusupboyev
+Azizbek Qo'shmambatov
+Biloliddin Husanboyev
+Toxirbek Ahmedov
+
+
+group-1(Samariddin)
+Elbek Qulmurodov
+Fazliddin Gadoyev
+Hojiakbar Baxromov
+Humoyun Qodirov
+Nurislom Rahmonov
+Urunov Samariddin
+
+
+
+
+botcommerceio
+swagger, drf, model
+
+
+
+abbos -
+elbek +
+nurislom +
+bilol +
+tohir +
+asqar +
+
+
+
+
+
+
+
+
+
+server,docker,docker-compose, nginxproxymanager
+
+docker controller
+ci/cd
+
+
+
+
+CI/CD, or continuous integration and continuous delivery
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
